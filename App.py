@@ -17,6 +17,7 @@ model = joblib.load("System_Failure_Prediction.pkl")
 # Page setup
 st.set_page_config(page_title="System Failure Prediction")
 st.title("System Failure Prediction")
+st.write("Predict whether a system is likely to **fail** based on input parameters.")
 st.write("Model raw output:", prediction)
 
 # Inputs
