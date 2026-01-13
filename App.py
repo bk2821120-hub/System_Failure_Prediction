@@ -11,38 +11,42 @@ import numpy as np
 import joblib
 import streamlit as st
 
-model=joblib.load("System_Failure_Prediction.pkl")
+# Load model
+model = joblib.load("System_Failure_Prediction.pkl")
+
+# Page setup
 st.set_page_config(page_title="System Failure Prediction")
 st.title("System Failure Prediction")
 st.write("Predict whether a system is likely to **fail** based on input parameters.")
 
-footfall = st.number_input("Value of footfall", value=None)
-tempMode = st.number_input("Value of tempMode", value=None)
-AQ = st.number_input("Value of AQ", value=None)
-USS = st.number_input("Value of USS", value=None)
-CS = st.number_input("Value of CS", value=None)
-VOC = st.number_input("Value of VOC", value=None)
-RP = st.number_input("Value of RP", value=None)
-IP = st.number_input("Value of IP", value=None)
-Temperature = st.number_input("Value of Temperature", value=None)
+# Inputs
+footfall = st.number_input("Value of footfall", min_value=0.0)
+tempMode = st.number_input("Value of tempMode", min_value=0.0)
+AQ = st.number_input("Value of AQ", min_value=0.0)
+USS = st.number_input("Value of USS", min_value=0.0)
+CS = st.number_input("Value of CS", min_value=0.0)
+VOC = st.number_input("Value of VOC", min_value=0.0)
+RP = st.number_input("Value of RP", min_value=0.0)
+IP = st.number_input("Value of IP", min_value=0.0)
+Temperature = st.number_input("Value of Temperature", min_value=0.0)
 
+# Predict button
 if st.button("Predict"):
-  input_data=np.array([[
-      footfall
-      tempMode
-      AQ
-      USS
-      CS
-      VOC
-      RP
-      IP
-      Temperature
-      fail
-  ]])
+    input_data = np.array([[
+        footfall,
+        tempMode,
+        AQ,
+        USS,
+        CS,
+        VOC,
+        RP,
+        IP,
+        Temperature
+    ]])
 
-  prediction = model.predict(input_data)[0]
+    prediction = model.predict(input_data)[0]
 
-if prediction == 0:
-    st.success("✅ System is operating normally")
-else:
-    st.error("⚠️ System failure predicted")
+    if prediction == 0:
+        st.success("✅ System is operating normally")
+    else:
+        st.error("⚠️ System failure predicted")
